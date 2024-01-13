@@ -3,7 +3,6 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 
-
 // configuration api
 dotenv.config();
 
@@ -16,7 +15,6 @@ const app = express();
 
 app.use(cors(corsConfig) );
 app.use(express.json() );
-app.use(express.urlencoded({ extended: true }) );
 
 // liaison des liens
 app.use("/produits",require("./routes/products") );
