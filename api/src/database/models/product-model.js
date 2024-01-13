@@ -34,7 +34,27 @@ module.exports = (sequelize) => sequelize.define("ProductModel",{
     name: {
         type: DataTypes.STRING(40),
         allowNull: false,
-        field: "designation"
+        field: "designation",
+        unique: {
+            msg: "Un produit portant le même nom existe déjà"
+        },
+        validate: {
+            len: {
+                args: [2,40],
+                msg: "Le nom doit contenir entre 2 et 40 caractères"
+            }
+        }
+    },
+    price: {
+        type: DataTypes.DECIMAL,
+        allowNull: false,
+        field: "prix",
+        validate: {
+            min: {
+                args: [0],
+                msg: "Le produit doit avoir un prix supérieur à 0"
+            }
+        }
     }
 },{
     timestamps: false,

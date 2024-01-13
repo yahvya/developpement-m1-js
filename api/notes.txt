@@ -1,0 +1,9 @@
+docs:
+    https://sequelize.org/docs/v6/
+    https://expressjs.com/fr/
+
+liens de l'api:
+
+    /produits -> liste des produits
+    /produits/[creer|supprimer|mettre-a-jour]/id_categorie -> action sur le produit
+

@@ -14,7 +14,16 @@ module.exports = (sequelize) => sequelize.define("CategoryModel",{
     categoryName: {
         type: DataTypes.STRING(40),
         field: "designation",
-        allowNull: false
+        allowNull: false,
+        unique: {
+            msg: "Une catégorie portant le même nom existe déjà"
+        },
+        validate: {
+            len: {
+                args: [2,40],
+                msg: "Le nom de la catégorie doit contenir entre 2 et 40 caractères"
+            }
+        }
     }
 },{
     timestamps: false,

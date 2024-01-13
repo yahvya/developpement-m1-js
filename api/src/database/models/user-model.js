@@ -15,7 +15,16 @@ module.exports = (sequelize) => {
         pseudo: {
             type: DataTypes.STRING(40),
             allowNull: false,
-            unique: true
+            unique: {
+                args: true,
+                msg: "Ce pseudo est déjà utilisé"
+            },
+            validate: {
+                len: {
+                    args: [3,40],
+                    msg: "Le pseudo doit contenir entre 3 et 40 caractères"
+                }
+            }
         },
         password: {
             type: DataTypes.STRING(80),
@@ -23,7 +32,13 @@ module.exports = (sequelize) => {
         },
         role: {
             type: DataTypes.ENUM("admin","user"),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isIn: {
+                    args: [["admin","user"]],
+                    msg: "Le role doit être admin ou user"
+                }
+            }
         },
         joinDate: {
             type: DataTypes.DATE,

@@ -13,11 +13,13 @@ const corsConfig = {
 
 const app = express();
 
-app.use(cors(corsConfig) );
-app.use(express.json() );
+app
+    .use(cors(corsConfig) )
+    .use(express.json() );
 
 // liaison des liens
-app.use("/produits",require("./routes/products") );
+app
+    .use("/produits",require("./routes/products") );
 
 // lancement du serveur
 app.listen(port,() => {
