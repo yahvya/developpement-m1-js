@@ -1,13 +1,22 @@
 // bibliothèques
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors");
 
 
-// configuration
+// configuration api
 dotenv.config();
 
-const app = express();
 const port = process.env.PORT || 8000;
+const corsConfig = {
+    origin: `http://127.0.0.1:${port}`
+};
+
+const app = express();
+
+app.use(cors(corsConfig) );
+app.use(express.json() );
+app.use(express.urlencoded({ extended: true }) );
 
 // liaison des liens
 app.use("/produits",require("./routes/products") );
