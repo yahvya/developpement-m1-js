@@ -53,5 +53,30 @@ class UserLogin{
     static logout(request){
         delete request.session[UserLogin.USER_SESSION_STORAGE_KEY];
     }
+
+    /**
+     * récupère les données de session utilisateur
+     * @param request la requete
+     * @param toGet clés à récupérer {id, pseudo, joinDate}
+     */
+    static getLoginData(request,...toGet){
+        // map de liaison des clés pouvant être envoyé par l'utilisateur aux réelles clés
+        const linkMap = {
+            id: "id",
+            pseudo: "pseudo",
+            joinDate: "joinDate"
+        };
+
+        const result = {};
+
+        if(UserLogin.USER_SESSION_STORAGE_KEY in request.session){
+            // récupération des données
+            for(const key of toGet){
+                if (key in linkMap) result[key] = request.session[UserLogin.USER_SESSION_STORAGE_KEY][linkMap[key] ];
+            }
+        }
+
+        return result;
+    }
 }
 module.exports = UserLogin;
