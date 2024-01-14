@@ -34,8 +34,8 @@ app
 app
     .use("/produits",require("./routes/products") )
     .use("/categories",require("./routes/categories") )
-    .use("/compte/administrateur",require("./routes/admin-login") )
-    .use("/compte",require("./routes/user-login") );
+    .use("/compte/administrateur",require("./routes/admin-account") )
+    .use("/compte",require("./routes/user-account") );
 
 // lancement du serveur
 app.listen(port,() => {

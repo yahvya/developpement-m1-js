@@ -1,3 +1,7 @@
+/**
+ * gestion des catégories
+ */
+
 const {Router} = require("express");
 const AdminLogin = require("../utils/login/admin-login");
 const sequelize = require("../database/utils/config");
