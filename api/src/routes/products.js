@@ -9,6 +9,8 @@ const sequelize = require("../database/utils/config");
 const ProductModel = require("../database/models/product-model")(sequelize);
 const CategoryModel = require("../database/models/category-model")(sequelize);
 
+
+
 /**
  * crud produits
  */
@@ -31,6 +33,25 @@ router
             success: true,
             products: await ProductModel.findAll({where: {categoryId: request.params.categoryId} })
         });
+    })
+    /**
+     * récupération d'un produit particulier
+     */
+    .post("/produit/:productId",async (request,response) => {
+        const product = await ProductModel.findOne({
+            where: {id : request.params.productId}
+        });
+
+        if(product === null)
+            response.json({
+                success: false,
+                error: "Produit non trouvé"
+            });
+        else
+            response.json({
+                success: true,
+                product: product
+            });
     });
 
 adminRequiredRouter
@@ -53,7 +74,7 @@ adminRequiredRouter
      */
     .post("/creer/:categoryId",async (request,response) => {
         // vérification d'existance de la catégorie
-        if(await CategoryModel.findOne({where: {id: request.params.categoryId} }) === null){
+        if(await CategoryModel.findByPk(request.params.categoryId) === null){
             response.json({
                 success: false,
                 error: "La catégorie fournie n'existe pas"
@@ -85,6 +106,74 @@ adminRequiredRouter
             response.json({
                 success: false,
                 error: "Veuillez fournir le nom et le prix de l'objet"
+            });
+    })
+    /**
+     * supprimer un produit
+     */
+    .post("/supprimer/:productId",async (request,response) => {
+        const success = await ProductModel.destroy({
+            where: {
+                id: request.params.productId
+            }
+        });
+
+        if(success)
+            response.json({success: true});
+        else
+            response.json({
+                success: false,
+                error: "Le produit à supprimer n'existe pas"
+            });
+    })
+    /**
+     * mettre à jour un produit
+     * @post price prix du produit
+     * @post name nom du produit
+     */
+    .post("/mettre-a-jour/:productId/:categoryId",async (request,response) => {
+        // on vérifie que le nouveau prix ou le nom soient présent
+        if(!("price" in request.body) || !("name" in request.body) ){
+            response.json({
+                success: false,
+                error: "Veuillez fournir le nouveau nom et prix du produit"
+            });
+            return;
+        }
+
+        // on vérifie que la nouvelle catégorie existe
+        if(await CategoryModel.findByPk(request.params.categoryId) === null){
+            response.json({
+                success: false,
+                error: "La nouvelle catégorie n'a pas été trouvée"
+            });
+            return;
+        }
+
+        // on récupère le produit s'il n'existe
+        const product = await ProductModel.findByPk(request.params.productId);
+
+        if(product !== null){
+            // mise à jour du produit
+            product.update({
+                name: request.body.name,
+                price: request.body.price
+            }).then(() => {
+                response.json({success: true});
+            }).catch(err => {
+                // gestion de l'erreur de création
+                const errorMessage = "errors" in err ? err.errors[0]["message"] : "Echec de mise à jour du produit";
+
+                response.json({
+                    success: false,
+                    error: errorMessage
+                });
+            });
+        }
+        else
+            response.json({
+                success: false,
+                error: "Le produit à mettre à jour n'a pas été trouvée"
             });
     });
 

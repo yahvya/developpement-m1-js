@@ -33,6 +33,7 @@ app
 // liaison des liens
 app
     .use("/produits",require("./routes/products") )
+    .use("/categories",require("./routes/categories") )
     .use("/compte/administrateur",require("./routes/admin-login") )
     .use("/compte",require("./routes/user-login") );
 
