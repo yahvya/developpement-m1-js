@@ -2,7 +2,7 @@
 const {Router} = require("express");
 const router = Router();
 const adminRequiredRouter = Router();
-const {AdminLogin} = require("../utils/login/admin-login");
+const AdminLogin = require("../utils/login/admin-login");
 
 // base de données
 const sequelize = require("../database/utils/config");
@@ -22,6 +22,15 @@ router
             success: true,
             products: await ProductModel.findAll()
         });
+    })
+    /**
+     * récupération des produits d'une catégorie
+     */
+    .post("/categories/:categoryId",async (request,response) => {
+        response.json({
+            success: true,
+            products: await ProductModel.findAll({where: {categoryId: request.params.categoryId} })
+        });
     });
 
 adminRequiredRouter
@@ -29,7 +38,7 @@ adminRequiredRouter
      * vérificateur de connexion en tant qu'administrateur
      */
     .use((request,response,next) => {
-        if(AdminLogin.isLogged() )
+        if(AdminLogin.isLogged(request) )
             next();
         else
             response.json({
@@ -44,19 +53,26 @@ adminRequiredRouter
      */
     .post("/creer/:categoryId",async (request,response) => {
         // vérification d'existance de la catégorie
-        if(await CategoryModel.findOne({where: {id: request.params.categoryId} }) === null) return response.json({
-            success: false,
-            error: "La catégorie fournie n'existe pas"
-        });
+        if(await CategoryModel.findOne({where: {id: request.params.categoryId} }) === null){
+            response.json({
+                success: false,
+                error: "La catégorie fournie n'existe pas"
+            });
 
+            return;
+        }
+
+        // vérification des données necessairs à la création
         if("name" in request.body && "price" in request.body){
+            // création du produit
             ProductModel.create({
                 name: request.body.name,
                 price: request.body.price,
                 categoryId: request.params.categoryId
-            }).then(r => {
+            }).then(() => {
                 response.json({success: true});
             }).catch(err => {
+                // gestion de l'erreur de création
                 const errorMessage = "errors" in err ? err.errors[0]["message"] : "Echec de création du produit";
 
                 response.json({
@@ -65,10 +81,11 @@ adminRequiredRouter
                 });
             });
         }
-        else response.json({
-            success: false,
-            error: "Veuillez fournir le nom et le prix de l'objet"
-        });
+        else
+            response.json({
+                success: false,
+                error: "Veuillez fournir le nom et le prix de l'objet"
+            });
     });
 
 router.use(adminRequiredRouter);

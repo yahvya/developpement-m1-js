@@ -51,8 +51,8 @@ module.exports = (sequelize) => {
     });
 
     // hashage de mot de passe avant insertion
-    model.beforeCreate(async (user) => {
-        user.password = await bcrypt.hash(user.password);
+    model.beforeCreate((user) => {
+        user.password = bcrypt.hashSync(user.password,bcrypt.genSaltSync(10) );
     });
 
     return model;
