@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+*{
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+button,
+input,
+textarea,
+a{
+    font-family: inherit;
+    text-decoration: inherit;
+}
+
+:root{
+    /*thème couleur*/
+    --background-color: #ffffff;
+    --text-background-color: #1B1F23;
+
+    --upper-color: #F6F6F6;
+    --text-upper-color: #1B1F23;
+
+    --special-color: #212123;
+    --text-special-color: #ffffff;
+
+    /*tailles du texte*/
+    --large-size: 21px;
+    --normal-size: 18px;
+    --smaller-size: 16px;
+
+    /*polices d'écritures*/
+    --special-font: "Montserrat","Oswald","Roboto","Arial","sans-serif";
+    --normal-font: "Poppins","Rubik","Roboto","Arial","sans-serif";
+    --specific-font: "Rubik","Oswald","Arial","sans-serif";
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    font-size: var(--normal-size);
+    font-family: var(--normal-font);
+}
+
+/*classes globales à l'application*/
+
+body,
+.bg{
+    background-color: var(--background-color);
+    color: var(--text-background-color);
+}
+
+.upper-bg,
+.upper-bg-hover{
+    background-color: var(--upper-color);
+    color: var(--text-upper-color);
+}
+
+.special-bg,
+.special-bg-hover{
+    background-color: var(--special-color);
+    color: var(--text-special-color);
+}
+
+.flex-row,
+.flex-column{
+    display: flex;
+}
+
+.flex-row{
+    flex-direction: row;
+}
+
+.flex-column{
+    flex-direction: column;
+}
+
+.justify-center{
+    justify-content: center;
+}
+
+.justify-between{
+    justify-content: space-between;
+}
+
+.justify-end{
+    justify-content: flex-end;
+}
+
+.justify-around{
+    justify-content: space-around;
+}
+
+.align-center{
+    align-items: center;
+}
+
+.align-end{
+    align-items: flex-end;
+}
+
+.align-start{
+    align-items: flex-start;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.text-upper{
+    text-transform: uppercase;
+}
+
+.text-underline{
+    text-decoration: underline;
+}

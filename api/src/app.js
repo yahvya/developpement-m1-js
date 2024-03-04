@@ -9,7 +9,7 @@ dotenv.config();
 
 const port = process.env.PORT || 8000;
 const corsConfig = {
-    origin: `http://127.0.0.1:${port}`
+    origin: `*`
 };
 const sess = {
     cookie: {},
@@ -30,7 +30,6 @@ app
     .use(session(sess) )
     .use(express.json() );
 
-// liaison des liens
 app
     .use("/produits",require("./routes/products") )
     .use("/categories",require("./routes/categories") )

@@ -1,0 +1,102 @@
+#navbar-toggler{
+    display: none;
+}
+
+#navbar{
+    font-size: var(--smaller-size);
+    font-family: var(--special-font);
+    font-weight: 600;
+    gap: 30px;
+    padding: 10px;
+    background-color: var(--upper-color);
+}
+
+#navbar a{
+    cursor: pointer;
+}
+
+#navbar a:hover{
+    text-decoration: underline;
+}
+
+#navbar,
+.nav-toggler.page-toggler{
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.nav-toggler{
+    position: relative;
+    display: none;
+    width: 50px;
+    height: 50px;
+    gap: 5px;
+    cursor: pointer;
+    background-color: var(--upper-color);
+}
+
+.nav-toggler span{
+    display: block;
+    width: 90%;
+    height: 4px;
+    background-color: var(--special-color);
+    border-radius: 2px;
+    transition: transform 0.3s;
+}
+
+.nav-toggler span:nth-child(2){
+    width: 85%;
+}
+
+.nav-toggler.page-toggler{
+    border-radius: 5px;
+    margin: 5px;
+}
+
+#navbar-toggler:checked ~ .nav-toggler span,
+#navbar-toggler:checked ~ .nav-toggler ~ #navbar .nav-toggler span{
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    width: 60%;
+}
+
+#navbar-toggler:checked ~ .nav-toggler span:nth-child(1),
+#navbar-toggler:checked ~ .nav-toggler ~ #navbar .nav-toggler span:nth-child(1){
+    transform: translate(-50%,-50%) rotate(40deg);
+}
+
+#navbar-toggler:checked ~ .nav-toggler span:nth-child(2),
+#navbar-toggler:checked ~ .nav-toggler ~ #navbar .nav-toggler span:nth-child(2){
+    display: none;
+}
+
+#navbar-toggler:checked ~ .nav-toggler span:nth-child(3),
+#navbar-toggler:checked ~ .nav-toggler ~ #navbar .nav-toggler span:nth-child(3){
+    transform: translate(-50%,-50%) rotate(-40deg);
+}
+
+@media screen and (max-width: 900px) {
+    #navbar{
+        position: fixed;
+        width: 300px;
+        max-width: 100%;
+        height: 100vh;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        overflow-y: auto;
+        left: -100%;
+        transition: left 0.4s;
+    }
+
+    .nav-toggler{
+        display: flex;
+        flex-direction: column;
+    }
+
+    #navbar-toggler:checked ~ .nav-toggler ~ #navbar{
+        left: 0;
+    }
+}

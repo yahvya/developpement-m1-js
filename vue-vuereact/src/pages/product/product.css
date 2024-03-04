@@ -1,0 +1,7 @@
+.categories{
+    padding: 10px;
+}
+
+.categories .categories-select{
+    font-size: var(--smaller-size);
+}

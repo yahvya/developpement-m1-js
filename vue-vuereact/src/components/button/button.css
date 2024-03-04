@@ -1,0 +1,12 @@
+.special-button{
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-family: var(--special-font);
+    transition: opacity 0.2s, border-radius 0.4s;
+}
+
+.special-button:hover{
+    opacity: 0.9;
+    border-radius: 0;
+}

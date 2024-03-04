@@ -14,10 +14,10 @@ router
     /**
      * récupère la liste des catégories
      */
-    .post("/",(request,response) => {
+    .post("/",async (request,response) => {
         response.json({
             success: true,
-            categories: CategoryModel.findAll()
+            categories: await CategoryModel.findAll()
         });
     });
 
